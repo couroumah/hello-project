@@ -1,0 +1,10 @@
+Checking Required Services
+Configurator.Extensions.User definable tables.Structures.UDF Field [CM.769]
+Configurator.Extensions.User definable tables.Structures.UDF Field [udtStructure = mx.statics.organization.UdtStructure [Bond Product Codes], label = EX_STP] [CM.769]
+Configurator.Extensions.User definable tables.Structures [Bond Product Codes] [CM.139]
+Configurator.Extensions.User definable tables.Structures [CM.139]
+Configurator.Extensions.User definable tables.Structures [DEAL CAPTURE] [CM.139]
+Configurator.Infrastructure.Processing center.Processing templates.Workflows [CM.368]
+Configurator.Infrastructure.Processing center.Processing templates.BookingSequence.Scripted rules [CM.112]
+Configurator.Data extraction.Datamart.Datamart management.Dynamic table.Client [CM.354]
+Configurator.Infrastructure.Processing center.Processing templates.Workflow DataDictionary.Formulae [CM.173]
