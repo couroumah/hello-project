@@ -1,0 +1,56 @@
+spring:
+  main:
+    banner-mode: off
+  server:
+    port: 8080
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:h2:mem:prod
+    username: sa
+    password:
+  h2:
+    console.enabled: true # http://localhost:8080/h2-console
+
+application:
+  settings:
+    build: build
+    fileExtensionXML: xml
+    fileExtensionCSV: csv
+
+    mapObjectId:
+      "CM.1089": "Configurator.Accounting.Rules.Accounting rules for trades, flows.Flow typologies"
+      "CM.201": "Configurator.Accounting.Rules.Accounting rules for trades, flows"
+      "CM.256": "Configurator.Accounting.Settings.Accounting configuration template.Revaluation schedule"
+      "CM.232": "Configurator.Accounting.Query.Journal of entries.View"
+      "CM.198": "Configurator.Accounting.Accounts.Formula"
+      "CM.550": "Configurator.Accounting.Hedge accounting.Fair value valuation templates"
+      "CM.230": "Configurator.Accounting.Rules.Accounting rules for trades.Filter tree"
+      "CM.539": "Configurator.Accounting.Rules.Accounting rules for business events"
+      "CM.505": "Configurator.Accounting.Settings.Accounting configuration template.NWD management"
+      "CM.813": "Configurator.Accounting.Rules.Accounting sub rules for business events"
+      "CM.229": "Configurator.Accounting.Rules.Accounting rules for trades, flows.Event details.Amount Per leg.Calculation"
+      "CM.547": "Configurator.Accounting.Hedge accounting.Hedge effectiveness methods"
+      "CM.228": "Configurator.Accounting.Rules.Accounting rules for trades.Filters.Filter.Tree.Calculation formula"
+      "CM.546": "Configurator.Accounting.Rules.Accounting rules for trades.Filter tree"
+      "CM.203": "Configurator.Accounting.Settings.Accounting configuration template"
+      "CM.225": "Configurator.Accounting.Settings.Accounting configuration template.Global settings"
+      "CM.202": "Configurator.Accounting.Settings.Accounting configuration template.Calculation"
+      "CM.224": "Configurator.Accounting.Settings.Accounting control template"
+      "CM.477": "Configurator.Accounting.Query.Journal of entries.Layout"
+      "CM.362": "Configurator.Data extraction.Datamart.Trade feeder scanner templates"
+      "CM.407": "Configurator.Data extraction.Datamart.Rights templates"
+      "CM.406": "Configurator.Data extraction.Datamart.Batches of stored procedures"
+      "CM.329": "Configurator.Data extraction.Datamart.Views.Dynamic table filters"
+      "CM.405": "Configurator.Data extraction.Datamart.Stored procedures"
+      "CM.403": "Configurator.Data extraction.Datamart.Views.User dynamic tables"
+      "CM.400": "Configurator.Data extraction.Datamart.Global filter"
+      "CM.408": "Configurator.Data extraction.Datamart.Datamart extractions"
+      "CM.354": "Configurator.Data extraction.Datamart.Datamart management.Dynamic table.Client"
+      "CM.353": "Configurator.Data extraction.Datamart.Datamart management.Sql table.Client"
+      "CM.418": "Configurator.Data extraction.Datamart.Batches of table feeders"
+      "CM.417": "Configurator.Data extraction.Datamart.Batches of datamart extractions"
+      "CM.414": "Configurator.Data extraction.Datamart.Table feeders"
+      "CM.173": "Configurator.Infrastructure.Processing center.Processing templates.Workflow DataDictionary.Formulae"
+      "CM.374": "Configurator.Infrastructure.Processing center.Processing templates.Workflow DataDictionary.Templates"
+      "CM.368": "Configurator.Infrastructure.Processing center.Processing templates.Workflows"
