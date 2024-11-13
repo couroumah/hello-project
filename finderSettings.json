@@ -1,0 +1,36 @@
+{
+    "pathOutputDirectory": "C:/Users/l137427/Downloads/MXCTT-Output/20241113",
+    "fileFilterWildCard": "*.xml",
+    "showBreakdown": false,
+
+    "mapLookupValues": {
+      "TPRNN NY-TRAD": "TANN LQ USD",
+      "TPRNN NY-HQLA": "TANN LQ USD2",
+      "TAANN TERM IGRP": "TANN LQ USD2",
+      "TPRNN REPO GCF": "TANN LQ USD2",
+      "TAANN NY POSN": "TANN LQ USD2",
+      "TPRNN FX FUND": "TANN LQ USD2",
+      "TREAS NY TLP": "TANN LQ USD2",
+      "TPRNN NY TLP": "TANN LQ USD2",
+      "TPRNN NY-FUND": "TANN LQ USD2",
+      "TPRNN NY-TREAS": "TANN LQ USD2",
+      "TAALL LOAN IQ": "TANN LQ USD2",
+      "TAALL DEPO FUND": "TANN LQ USD2",
+      "TPRLL FXHEDGE": "TANN LQ USD2",
+      "TAALL POSN ARR": "TANN LQ USD2",
+      "TAALL FUND ARR": "TANN LQ USD2",
+      "TPRLL TRAD ARR": "TANN LQ USD2",
+      "TPRLL FX FUND": "TANN LQ USD2",
+      "TPRLL LQ REG": "TANN LQ USD2",
+      "TPRLL LIQUIDITY": "TANN LQ USD2",
+      "TPRLL LQ_SPRD": "TANN LQ USD2",
+      "TPRLL IGFUND": "TANN LQ USD2",
+      "TAALL TERM IGRP": "TANN LQ USD2",
+      "TAALL FUND ACCR": "TANN LQ USD2",
+      "TAAEU WEG FX": "TANN LQ USD2"
+    },
+
+    "mapLookupDirectories": {
+      "Accounting": "C:/Users/l137427/Downloads/MXCTT-Output/ACCOUNTING"
+    }
+  }
