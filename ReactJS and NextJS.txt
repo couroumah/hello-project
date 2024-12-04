@@ -1,0 +1,22 @@
+
+Nextjs and Java Spring Boot App
+================================
+
+https://github.com/jorgevee/Nextjs_Java/tree/main
+
+https://github.com/jorgevee/Nextjs_Java/blob/main/README.md
+
+
+t3-app-template
+================
+https://github.com/gaofubin/t3-app-template
+
+https://t3-app-template.vercel.app/
+
+
+React Typescript Login and Registration example
+===============================================
+https://www.bezkoder.com/react-typescript-login-example/
+
+
+
