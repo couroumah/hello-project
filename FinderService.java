@@ -1,10 +1,5 @@
 package com.devops.toolbox.finder;
 
-import com.devops.toolbox.cmftemplates.lookupTables.LookupTablesService;
-import com.devops.toolbox.util.JAXBUtils;
-import com.westpac.murex.devops.model.lookupTable.DecisionTree;
-import com.westpac.murex.devops.model.lookupTable.LookupTable;
-import com.westpac.murex.devops.model.lookupTable.UserDefinedField;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -23,7 +18,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.devops.toolbox.util.Messages.getString;
 import static com.devops.toolbox.util.StandardConstants.*;
@@ -33,9 +31,51 @@ import static com.devops.toolbox.util.StandardConstants.*;
 public class FinderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(FinderService.class);
 
-    private final FinderEntityRepository repository;
     private final FinderEntityMapper mapper;
-    private final LookupTablesService lookupTablesService;
+
+    /**
+     * Writes a report for each business object having its configuration files within a specific directory
+     *
+     * @param finderSettings finder settings
+     */
+    public List<FinderEntityDto> writeReport(FinderSettings finderSettings) {
+        List<FinderEntityDto> finderEntityDtos = new ArrayList<>();
+        Map<String, String> mapLookupValues = finderSettings.getMapLookupValues();
+
+        Map<String, String> mapObjectId = finderSettings.getMapObjectId();
+        List<String> lookupValues = mapLookupValues.keySet().stream().toList();
+        Map<String, String> mapLookupDirectories = finderSettings.getMapLookupDirectories();
+        Path pathOutputDirectory = Paths.get(finderSettings.getPathOutputDirectory());
+        String fileFilterWildCard = finderSettings.getFileFilterWildCard();
+
+        if (!pathOutputDirectory.toFile().exists()) {
+            pathOutputDirectory.toFile().mkdirs();
+        }
+
+        for (Map.Entry<String, String> entry : mapLookupDirectories.entrySet()) {
+            String businessObject = entry.getKey();
+            String path = entry.getValue();
+            Path pathLookupDirectory = Paths.get(path);
+            Path pathOutputFile = pathOutputDirectory.resolve(FinderHelper.getExportFilename(businessObject, XLSX_FILE_EXTENSION));
+
+            try {
+                finderEntityDtos.addAll(
+                        doWriteReportFoundPatterns(businessObject, pathLookupDirectory, lookupValues, pathOutputFile, mapLookupValues, fileFilterWildCard, mapObjectId)
+                );
+
+            } catch (Exception e) {
+//                throw new RuntimeException(
+//                        MessageFormat.format("Cannot write report for businessObject [{0}]. Exception : {1}",
+//                                businessObject,
+//                                e.getMessage()));
+                LOGGER.error(MessageFormat.format("Cannot write report for businessObject [{0}]. Exception : {1}",
+                        businessObject,
+                        e.getMessage()));
+            }
+        }
+
+        return finderEntityDtos;
+    }
 
     /**
      * Returns <code>a map<Filename,List of patterns></code>
@@ -44,7 +84,7 @@ public class FinderService {
      * @param patterns      list of patterns to search
      * @return <code>a map<Filename,List of patterns></code>
      */
-    public Map<String, List<Map<String, List<String>>>> findPatternsInFile(Path pathInputFile,
+    private Map<String, List<Map<String, List<String>>>> findPatternsInFile(Path pathInputFile,
                                                                            List<String> patterns) {
         Map<String, List<Map<String, List<String>>>> rc = new HashMap<>();
         try {
@@ -69,7 +109,7 @@ public class FinderService {
      * @param fileFilterWildCard
      * @return <code>a map<Filename,List of patterns></code>
      */
-    public List<Map<String, List<Map<String, List<String>>>>> findPatternsInFiles(Path pathInputDirectory,
+    private List<Map<String, List<Map<String, List<String>>>>> findPatternsInFiles(Path pathInputDirectory,
                                                                                   List<String> patterns,
                                                                                   String fileFilterWildCard) {
         LOGGER.debug("--start [{}] ...", Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -96,7 +136,7 @@ public class FinderService {
      * @param patterns           list of patterns
      * @return a list of tradingBankingBookReport objects
      */
-    public List<FinderEntityDto> getFinderEntityDtos(String businessObject,
+    private List<FinderEntityDto> getFinderEntityDtos(String businessObject,
                                                      Path pathInputDirectory,
                                                      List<String> patterns,
                                                      Map<String, String> mapLookupValues,
@@ -190,8 +230,7 @@ public class FinderService {
 
         return Strings.EMPTY;
     }
-
-
+    
     /**
      * Writes a report for a single business object having its configuration files within a specific directory
      *
@@ -229,66 +268,6 @@ public class FinderService {
     }
 
     /**
-     * Writes a report for each business object having its configuration files within a specific directory
-     *
-     * @param finderSettings finder settings
-     */
-    public List<FinderEntityDto> writeReport(FinderSettings finderSettings) {
-        List<FinderEntityDto> finderEntityDtos = new ArrayList<>();
-        Map<String, String> mapLookupValues = finderSettings.getMapLookupValues();
-
-        Map<String, String> mapObjectId = finderSettings.getMapObjectId();
-        List<String> lookupValues = mapLookupValues.keySet().stream().toList();
-        Map<String, String> mapLookupDirectories = finderSettings.getMapLookupDirectories();
-        Path pathOutputDirectory = Paths.get(finderSettings.getPathOutputDirectory());
-        String fileFilterWildCard = finderSettings.getFileFilterWildCard();
-
-        if (!pathOutputDirectory.toFile().exists()) {
-            pathOutputDirectory.toFile().mkdirs();
-        }
-
-        for (Map.Entry<String, String> entry : mapLookupDirectories.entrySet()) {
-            String businessObject = entry.getKey();
-            String path = entry.getValue();
-            Path pathLookupDirectory = Paths.get(path);
-            Path pathOutputFile = pathOutputDirectory.resolve(FinderHelper.getExportFilename(businessObject, XLSX_FILE_EXTENSION));
-
-            try {
-                finderEntityDtos.addAll(
-                        doWriteReportFoundPatterns(businessObject, pathLookupDirectory, lookupValues, pathOutputFile, mapLookupValues, fileFilterWildCard, mapObjectId)
-                );
-
-            } catch (Exception e) {
-//                throw new RuntimeException(
-//                        MessageFormat.format("Cannot write report for businessObject [{0}]. Exception : {1}",
-//                                businessObject,
-//                                e.getMessage()));
-                LOGGER.error(MessageFormat.format("Cannot write report for businessObject [{0}]. Exception : {1}",
-                        businessObject,
-                        e.getMessage()));
-            }
-        }
-
-        return finderEntityDtos;
-    }
-
-    public void displayLookupTables(Path pathFile, List<String> patterns) throws IOException {
-        LookupTable lookupTable = JAXBUtils.convertXMLToObject(LookupTable.class, FileUtils.readFileToString(pathFile.toFile(), String.valueOf(Charset.defaultCharset())));
-        Collection<DecisionTree> decisionTrees = lookupTable.getTemplateConfiguration()
-                .getLookupConfiguration()
-                .getDecisionTrees()
-                .getDecisionTreeCollection();
-
-        List<Map<String, List<UserDefinedField>>> rc = lookupTablesService.searchPatterns(decisionTrees, patterns);
-
-        rc.stream().forEach(stringListMap -> stringListMap.entrySet().stream()
-                .forEach(stringListEntry -> LOGGER.info("LookupTable[{}] - Pattern[{}] - Occurrences[{}]", stringListEntry.getKey()
-                        ,stringListEntry.getValue().stream().findFirst().get().getFieldValue(),stringListEntry.getValue().size())));
-    }
-
-
-
-    /**
      * Returns short name i-e without the file extension
      *
      * @param longName file long name, i-e with extension , e.g., file.txt
@@ -308,4 +287,5 @@ public class FinderService {
             return rc;
         }
     }
+
 }
