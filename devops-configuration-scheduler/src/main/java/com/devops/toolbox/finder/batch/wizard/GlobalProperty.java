@@ -1,19 +1,27 @@
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlValue;
-import lombok.Getter;
-import lombok.Setter;
+package com.devops.toolbox.finder.batch.wizard;
 
-@XmlRootElement(name = "globalProperty")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Getter @Setter
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class GlobalProperty {
-    @XmlAttribute
-    @XmlID
+    @JsonProperty("name")
     private String name;
-
     private String pathOut;
     private String fileExtensionXML;
     private String fileExtensionCSV;
+
+    @Override
+    public String toString() {
+        return "GlobalProperty{" +
+                "name='" + name + '\'' +
+                ", pathOut='" + pathOut + '\'' +
+                ", fileExtensionXML='" + fileExtensionXML + '\'' +
+                ", fileExtensionCSV='" + fileExtensionCSV + '\'' +
+                '}';
+    }
 }
