@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlValue;
 import lombok.Getter;
 import lombok.Setter;
 
-@XmlRootElement(name = "globalProperty")
+@XmlRootElement(name = "globalProperties")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Getter @Setter
 public class GlobalProperties {
